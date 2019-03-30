@@ -6,8 +6,14 @@ function giveItBackLater(value, callback) {
 };
 
 function addSomePromises(somePromise) {
-  // new Promise((resolve, reject) => console.log(somePromise))
-  //   .then() =>
+  const p = new Promise(() => {
+    val1 = somePromise
+    somePromise
+      .then(resolve(val1, val1))
+      .then(reject(val1, val1, val1))
+      .catch(err => "error")
+  })
+  return p;  
 }
 
 function promiseToGiveItBackLater(value) {
@@ -18,16 +24,3 @@ function promiseToGiveItBackLater(value) {
 }
 
 module.exports = { giveItBackLater, addSomePromises, promiseToGiveItBackLater }
-
-// giveItBackLater("TotallyAwesomeValue", value => console.log(value))
-// promiseToGiveItBackLater("Tresting the other one")
-
-
-const rejectedPromise = Promise.reject("failure")
-const p1 = addSomePromises(Promise.resolve("success")),
-  p2 = addSomePromises(rejectedPromise)
-// catch rejection to avoid warning
-rejectedPromise.catch(() => null)
-
-console.log(p1)
-console.log(p2)
